@@ -1,0 +1,17 @@
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm/
+.npm-global/
+
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Build artifacts
+dist/
+build/
