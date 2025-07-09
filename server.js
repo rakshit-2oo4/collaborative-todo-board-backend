@@ -13,8 +13,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// Define allowed origins for both Express and Socket.IO
-// IMPORTANT: These URLs must be exact, without trailing slashes.
 const allowedOrigins = [
   'http://localhost:5173', // For your local frontend development
   process.env.FRONTEND_URL // This will be your Vercel frontend URL from Render env vars
@@ -27,7 +25,10 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or Postman)
+      // --- ADD THESE CONSOLE.LOGS ---
+      console.log("Socket.IO CORS Debug: Incoming Request Origin =", origin);
+      console.log("Socket.IO CORS Debug: Allowed Origins Array =", allowedOrigins);
+      // --- END ADDITIONS ---
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
@@ -40,13 +41,17 @@ const io = new Server(server, {
   }
 });
 
-// Express Middleware for CORS
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or Postman)
+    // --- ADD THESE CONSOLE.LOGS ---
+    console.log("CORS Debug: Incoming Request Origin =", origin);
+    console.log("CORS Debug: Allowed Origins Array =", allowedOrigins);
+    // --- END ADDITIONS ---
+
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      console.error("CORS Error: Origin NOT found in allowed list:", origin); // Log the specific origin that failed
       return callback(new Error(msg), false);
     }
     return callback(null, true);
