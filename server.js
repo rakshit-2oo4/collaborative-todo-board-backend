@@ -10,7 +10,7 @@ const taskRoutes = require('./routes/taskRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 const allowedOrigins = [
